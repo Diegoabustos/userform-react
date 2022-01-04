@@ -23,7 +23,7 @@ export const InputSimple: React.FC<InputSimpleProperties> = ({
 }: InputSimpleProperties): JSX.Element => {
   const INPUT_WIDTH = {
     // small: "w-full lg:w-2/12 md:w-4/12 px-4",
-    small: "w-full lg:w-4/12 px-4",
+    small: "w-full lg:w-4/12 md:w-6/12 px-4",
     normal: "w-full lg:w-6/12 px-4",
     medium: "w-full lg:w-8/12 px-4",
     large: "w-full lg:w-12/12 px-4",
