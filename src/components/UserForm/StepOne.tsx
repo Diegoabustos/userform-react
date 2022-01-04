@@ -135,6 +135,55 @@ export const StepOne: React.FC<StepOneProperties> = ({
           errors.email = "formato de mail inváñido";
         }
 
+        // street validation
+        if (!values.calle) {
+          errors.calle = "Favor de ingresar la calle";
+        } else if (!/^[#.0-9a-zA-Z\s,-]+$/.test(values.calle)) {
+          errors.calle = "No se permiten simbolos en esté campo";
+        }
+
+        // ext validation
+        if (!values.ext) {
+          errors.ext = "Favor de ingresar el número exterior";
+        } else if (!/^[#.0-9a-zA-Z\s,-]+$/.test(values.ext)) {
+          errors.ext= "No se permiten simbolos en esté campo";
+        }
+
+        // zipcode validation
+        if (!values.zipcode) {
+          errors.zipcode = "Favor de ingresar el codigo postal";
+        } else if (!/^\d{4,5}$/.test(values.zipcode)) {
+          errors.zipcode= "formato de código postal inválido";
+        }
+
+        // colonia
+        if (!values.colonia) {
+          errors.colonia = "Favor de ingresar la colonia";
+        } else if (!/^\d{4,5}$/.test(values.colonia)) {
+          errors.colonia = "EL campo de colonia solo permite letras y espacios";
+        }
+
+        // ciudad
+        if (!values.ciudad) {
+          errors.ciudad = "Favor de ingresar la ciudad";
+        } else if (!/^\d{4,5}$/.test(values.ciudad)) {
+          errors.ciudad = "EL campo de ciudad solo permite letras y espacios";
+        }
+
+        // entidad
+        if (!values.entidad) {
+          errors.entidad = "Favor de ingresar entidad o estado";
+        } else if (!/^\d{4,5}$/.test(values.entidad)) {
+          errors.entidad = "Solo se permite letras y espacios en este campo";
+        }
+
+        // pais
+        if (!values.pais) {
+          errors.pais = "Favor de ingresar el pais";
+        } else if (!/^\d{4,5}$/.test(values.pais)) {
+          errors.pais = "EL campo de pais solo permite letras y espacios";
+        }
+
         return errors;
       }}
       onSubmit={(data) => {
