@@ -2,7 +2,7 @@ interface InputSimpleProperties {
   errorMessage?: any;
   name?: string;
   label?: string;
-  size?: "normal" | "small" | "large" | "medium" | "short";
+  size?: "normal" | "small" | "large" | "medium" ;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
   placeholder?: string;
@@ -22,7 +22,7 @@ export const InputSimple: React.FC<InputSimpleProperties> = ({
   value,
 }: InputSimpleProperties): JSX.Element => {
   const INPUT_WIDTH = {
-    short: "w-full lg:w-2/12 px-4",
+    // small: "w-full lg:w-2/12 md:w-4/12 px-4",
     small: "w-full lg:w-4/12 px-4",
     normal: "w-full lg:w-6/12 px-4",
     medium: "w-full lg:w-8/12 px-4",
@@ -32,13 +32,13 @@ export const InputSimple: React.FC<InputSimpleProperties> = ({
   return (
     <div className={`${INPUT_WIDTH[size!]}`}>
       <div className="relative w-full mb-3">
-        <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+        <label className="block uppercase text-blue-900 text-xs font-bold mb-2">
           {label}
         </label>
         <input
           name={name}
           type={type}
-          className="border-2 px-3 py-3 border-gray-300 placeholder-indigo-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          className="border-2 px-3 py-3 border-gray-300 placeholder-blue-900 text-blue-900 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
           onChange={onChange}
           onBlur={onBlur}
           placeholder={placeholder}

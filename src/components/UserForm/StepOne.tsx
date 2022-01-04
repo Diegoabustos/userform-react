@@ -1,7 +1,6 @@
 import { InputSimple } from "../InputSimple";
 import { InputUpDoc } from "../InputUpDoc";
-import { Form, Formik, FormikErrors } from "formik";
-import { MultiInputAddress } from "../MultiInputAddress";
+import { Formik, FormikErrors } from "formik";
 
 interface StepOneProperties {
   nextStep?: any;
@@ -17,6 +16,16 @@ interface MyFormValues {
   industria: string;
   telefono: string;
   email: string;
+  calle: string;
+  ext: string;
+  int: string;
+  zipcode: string;
+  colonia: string;
+  ciudad: string;
+  entidad: string;
+  pais: string;
+  clabe: string;
+  banco: string;
 }
 
 export const StepOne: React.FC<StepOneProperties> = ({
@@ -31,7 +40,17 @@ export const StepOne: React.FC<StepOneProperties> = ({
     regimenFiscal: "",
     industria: "",
     telefono: "",
-    email: "jojojo",
+    email: "",
+    calle: "",
+    ext: "",
+    int: "",
+    zipcode: "",
+    colonia: "",
+    ciudad: "",
+    entidad: "",
+    pais: "",
+    clabe: "",
+    banco: ""
   };
 
   return (
@@ -39,45 +58,48 @@ export const StepOne: React.FC<StepOneProperties> = ({
       initialValues={initialValues}
       validate={(values) => {
         let errors: FormikErrors<MyFormValues> = {};
-        if (
-          !values.razonSocial ||
-          !values.nacionalidad ||
-          !values.regimenFiscal ||
-          !values.industria ||
-          !values.nombreComercial
-        ) {
-          errors.razonSocial = "El";
-          errors.nacionalidad = "Campo obligatorio *";
-          errors.regimenFiscal = "Campo obligatorio *";
-          errors.industria = "Campo obligatorio *";
-          errors.nombreComercial = "Campo obligatorio *";
+
+        if (!values.razonSocial) {
+          errors.razonSocial = "Favor de ingresar la razón social";
         } else if (
-          !/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(
-            values.razonSocial &&
-              values.nacionalidad &&
-              values.regimenFiscal &&
-              values.industria &&
-              values.nombreComercial
-          )
+          !/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.razonSocial)
         ) {
-          errors.razonSocial = "SOlo se permiten letras y espacios";
-          errors.nacionalidad = "SOlo se permiten letras y espacios";
-          errors.regimenFiscal = "SOlo se permiten letras y espacios";
-          errors.industria = "SOlo se permiten letras y espacios";
-          errors.nombreComercial = "SOlo se permiten letras y espacios";
+          errors.razonSocial = "La razon social solo permite letras y espacios";
+        }
+        if (!values.nombreComercial) {
+          errors.nombreComercial = "Favor de ingresar el nombre comercial";
+        } else if (
+          !/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.nombreComercial)
+        ) {
+          errors.nombreComercial = "El nombre comercial solo permite letras y espacios";
+        }
+        if (!values.nacionalidad) {
+          errors.nacionalidad = "Favor de ingresar a nacionalidad";
+        } else if (
+          !/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.nacionalidad)
+        ) {
+          errors.nacionalidad = "La nacionalidad solo permite letras y espacios";
+        }
+        if (!values.regimenFiscal) {
+          errors.regimenFiscal = "Favor de ingresar el regimen fiscal";
+        } else if (
+          !/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.regimenFiscal)
+        ) {
+          errors.regimenFiscal = "El regimen fiscal solo permite letras y espacios";
         }
 
-        // email validation
-        if (!values.email) {
-          errors.email = "Porfavor ingrese un email";
+        // indusrty validation
+        if (!values.industria) {
+          errors.industria = "Favor de ingresar la industria";
         } else if (
-          !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(values.email)
+          !/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.industria)
         ) {
-          errors.email = "ingrese un mail válido";
+          errors.industria = "La industria solo permite letras y espacios";
         }
 
+        // rfc validation
         if (!values.rfc) {
-          errors.rfc = "Porfavor ingrese un rfc";
+          errors.rfc = "Favor ingrese un rfc";
         } else if (
           !/^([A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})$/.test(
             values.rfc
@@ -85,6 +107,13 @@ export const StepOne: React.FC<StepOneProperties> = ({
         ) {
           errors.rfc = "ingrese un rfc válido";
         }
+
+        // date validation
+        if (!values.fechaConstitucion) {
+          errors.fechaConstitucion = "Campo de fecha obligatorio";
+        } 
+
+        // thelephone number validation
         if (!values.telefono) {
           errors.telefono = "Porfavor ingrese un telefono";
         } else if (
@@ -92,15 +121,24 @@ export const StepOne: React.FC<StepOneProperties> = ({
             values.telefono
           )
         ) {
-          errors.telefono = "ingrese un telefono válido";
+          errors.telefono = "Formato telefonico inválido";
         }
-        if (!values.fechaConstitucion) {
-          errors.fechaConstitucion = "Porfavor ingrese una fecha";
+
+        // email validation
+        if (!values.email) {
+          errors.email = "Fvor de ingresar un email";
+        } else if (
+          !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(values.email)
+        ) {
+          errors.email = "formato de mail inváñido";
         }
+
+        
+        
         return errors;
       }}
       onSubmit={(data) => {
-        nextStep();
+        nextStep(2);
         console.log("Formulario Enviado", data);
       }}
     >
@@ -113,7 +151,7 @@ export const StepOne: React.FC<StepOneProperties> = ({
         handleBlur,
       }) => (
         <section className="py-1">
-          <div className="w-full lg:w-10/12 px-4 mx-auto mt-6">
+          <div className="w-full lg:w-8/12 px-4 mx-auto mt-6">
             <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-white/90 border-0">
               <div className="rounded-t bg-white mb-0 px-6 py-6">
                 <div className="text-center flex justify-between">
@@ -154,9 +192,22 @@ export const StepOne: React.FC<StepOneProperties> = ({
                       onChange={handleChange}
                       onBlur={handleBlur}
                       type="text"
-                      size="small"
+                      size="normal"
                       placeholder="Juan Perez"
                       value={values.nombreComercial}
+                    />
+                    <InputSimple
+                      errorMessage={
+                        touched.email && errors.email ? errors.email : null
+                      }
+                      label="dirección de correo electrónico"
+                      name="email"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      size="normal"
+                      type="email"
+                      placeholder=""
+                      value={values.email}
                     />
                     <InputSimple
                       errorMessage={
@@ -169,7 +220,7 @@ export const StepOne: React.FC<StepOneProperties> = ({
                       onChange={handleChange}
                       onBlur={handleBlur}
                       type="text"
-                      size="short"
+                      size="small"
                       placeholder="Juan Perez"
                       value={values.nacionalidad}
                     />
@@ -212,7 +263,7 @@ export const StepOne: React.FC<StepOneProperties> = ({
                       onChange={handleChange}
                       onBlur={handleBlur}
                       type="text"
-                      size="short"
+                      size="small"
                       placeholder=""
                       value={values.rfc}
                     />
@@ -228,7 +279,7 @@ export const StepOne: React.FC<StepOneProperties> = ({
                       onChange={handleChange}
                       onBlur={handleBlur}
                       type="date"
-                      size="short"
+                      size="small"
                       placeholder=""
                       value={values.fechaConstitucion}
                     />
@@ -248,92 +299,140 @@ export const StepOne: React.FC<StepOneProperties> = ({
                       placeholder=""
                       value={values.telefono}
                     />
+                    
                     <InputSimple
-                      errorMessage={
-                        touched.email && errors.email ? errors.email : null
-                      }
-                      label="dirección de correo electrónico"
-                      name="email"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      size="small"
-                      type="email"
-                      placeholder="juan@perezmail.com"
-                      value={values.email}
+                    errorMessage={ 
+                      touched.calle  && touched.calle ? errors.calle : null 
+                    }
+                    label="Calle o Avenida"
+                    name="calle"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    size="medium"
+                    type="text"
+                    placeholder=""
+                    value={values.calle}
                     />
-                    <MultiInputAddress
-                      data={[
-                        {
-                          error: (`${touched.email && errors.email ? errors.email : null}`),
-                          name: (`${values.email}`),
-                          label: (`${values.email}`),
-                          value: (`${values.email}`),
-                          placeholder: (`${values.email}`),
-                          type: "text",
-                          size: "normal",
-                        },
-                        {
-                          name: "calle",
-                          label: "Calle o Avenida",
-                          value: "calle",
-                          placeholder: "michael",
-                          type: "text",
-                          size: "normal",
-                        },
-                        {
-                          name: "calle",
-                          label: "Calle o Avenida",
-                          value: "calle",
-                          placeholder: "michael",
-                          type: "text",
-                          size: "normal",
-                        },
-                        {
-                          name: "calle",
-                          label: "Calle o Avenida",
-                          value: "calle",
-                          placeholder: "michael",
-                          type: "text",
-                          size: "normal",
-                        },
-                        {
-                          name: "calle",
-                          label: "Calle o Avenida",
-                          value: "calle",
-                          placeholder: "michael",
-                          type: "text",
-                          size: "normal",
-                        },
-                        {
-                          name: "calle",
-                          label: "Calle o Avenida",
-                          value: "calle",
-                          placeholder: "michael",
-                          type: "text",
-                          size: "normal",
-                        },
-                        {
-                          name: "calle",
-                          label: (`${values.email}`),
-                          value: "calle",
-                          placeholder: "michael",
-                          type: "text",
-                          size: "normal",
-                        },
-                        {
-                          name: "calle",
-                          label: "Calle o Avenida",
-                          value: "calle",
-                          placeholder: "michael",
-                          type: "text",
-                          size: "normal",
-                        },
-                      ]}
-                      onChange={handleChange}
-                      errorMessage={
-                        touched.email && errors.email ? errors.email : null
-                      }
+                    <InputSimple
+                    errorMessage={ 
+                      touched.ext  && touched.ext ? errors.ext : null 
+                    }
+                    label="Número exterior"
+                    name="ext"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    size="small"
+                    type="text"
+                    placeholder=""
+                    value={values.ext}
                     />
+                    <InputSimple
+                    errorMessage={ 
+                      touched.int  && touched.int ? errors.int : null 
+                    }
+                    label="Número interior"
+                    name="int"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    size="small"
+                    type="text"
+                    placeholder=""
+                    value={values.int}
+                    />
+                    <InputSimple
+                    errorMessage={ 
+                      touched.zipcode  && touched.zipcode ? errors.zipcode : null 
+                    }
+                    label="Código Postal"
+                    name="zipcode"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    size="small"
+                    type="text"
+                    placeholder=""
+                    value={values.zipcode}
+                    />
+                    <InputSimple
+                    errorMessage={ 
+                      touched.colonia  && touched.colonia ? errors.colonia : null 
+                    }
+                    label="Colonia o Urbanización"
+                    name="colonia"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    size="small"
+                    type="text"
+                    placeholder=""
+                    value={values.colonia}
+                    />
+                    <InputSimple
+                    errorMessage={ 
+                      touched.ciudad  && touched.ciudad ? errors.ciudad : null 
+                    }
+                    label="Ciudad o Población"
+                    name="ciudad"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    size="small"
+                    type="text"
+                    placeholder=""
+                    value={values.ciudad}
+                    />
+                    <InputSimple
+                    errorMessage={ 
+                      touched.entidad  && touched.entidad ? errors.entidad : null 
+                    }
+                    label="Entidad Federativa o Estado"
+                    name="entidad"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    size="medium"
+                    type="text"
+                    placeholder=""
+                    value={values.entidad}
+                    />
+                    <InputSimple
+                    errorMessage={ 
+                      touched.pais  && touched.pais ? errors.pais : null 
+                    }
+                    label="País"
+                    name="pais"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    size="small"
+                    type="text"
+                    placeholder=""
+                    value={values.pais}
+                    />
+
+                    <InputSimple
+                    errorMessage={ 
+                      touched.clabe  && touched.clabe ? errors.clabe : null 
+                    }
+                    label="CLABE"
+                    name="clabe"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    size="small"
+                    type="text"
+                    placeholder=""
+                    value={values.clabe}
+                    />
+
+                    <InputSimple
+                    errorMessage={ 
+                      touched.banco  && touched.banco ? errors.banco : null 
+                    }
+                    label="Banco"
+                    name="banco"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    size="small"
+                    type="text"
+                    placeholder=""
+                    value={values.banco}
+                    />
+                    
                     <InputUpDoc />
                     
                     <div className="w-full lg:w-12/12 px-4">

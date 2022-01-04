@@ -14,7 +14,15 @@ interface MyFormValues {
   nacionalidad: string;
   curp: string;
   rfc: string;
-  domicilio: string;
+
+  calle: string;
+  ext: string;
+  int: string;
+  zipcode: string;
+  colonia: string;
+  ciudad: string;
+  entidad: string;
+  pais: string;
   estadoCivil: string;
   email: string;
   telefono: string;
@@ -33,7 +41,14 @@ export const StepTwo: React.FC<StepTwoProperties> = ({
     nacionalidad: "",
     curp: "",
     rfc: "",
-    domicilio: "",
+    calle: "",
+    ext: "",
+    int: "",
+    zipcode: "",
+    colonia: "",
+    ciudad: "",
+    entidad: "",
+    pais: "",
     estadoCivil: "",
     email: "",
     telefono: "",
@@ -46,40 +61,82 @@ export const StepTwo: React.FC<StepTwoProperties> = ({
       validate={(values) => {
         let errors: FormikErrors<MyFormValues> = {};
 
-        if (
-          !values.nombre ||
-          !values.genero ||
-          !values.fechaNacimiento ||
-          !values.entidadNacimiento ||
-          !values.paisNacimiento ||
-          !values.nacionalidad ||
-          !values.estadoCivil
-        ) {
-          errors.nombre = "Campo obligatorio *";
-          errors.genero = "Campo obligatorio *";
-          errors.fechaNacimiento = "Campo obligatorio *";
-          errors.entidadNacimiento = "Campo obligatorio *";
-          errors.paisNacimiento = "Campo obligatorio *";
-          errors.nacionalidad = "Campo obligatorio *";
-          errors.estadoCivil = "Campo obligatorio *";
+
+        // name validation
+        if (!values.nombre) {
+          errors.nombre = "Favor de ingresar en nombre";
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.nombre)) {
+          errors.nombre = "El nombre solo permite letras  y espacios";
+        }
+
+        // gender validation
+        if (!values.genero) {
+          errors.genero = "Favor de ingresar el genero";
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.genero)) {
+          errors.genero = "El genero solo permite letras y espacios";
+        }
+
+        // date validation
+        if (!values.fechaNacimiento) {
+          errors.fechaNacimiento = "Campo de fecha obligatorio";
+        }
+
+        // entity validation
+        if (!values.entidadNacimiento) {
+          errors.entidadNacimiento = "Favor de ingresar la entidad de nacimiento";
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.entidadNacimiento)) {
+          errors.entidadNacimiento = "La entidad de nacimiento solo permite letras y espacios";
+        }
+
+        // nacionalidad validation
+        if (!values.nacionalidad) {
+          errors.nacionalidad = "Favor de ingresar a nacionalidad";
         } else if (
-          !/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(
-            values.nombre &&
-              values.genero &&
-              values.fechaNacimiento &&
-              values.entidadNacimiento &&
-              values.paisNacimiento &&
-              values.nacionalidad &&
-              values.estadoCivil
+          !/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.nacionalidad)
+        ) {
+          errors.nacionalidad = "La nacionalidad solo permite letras y espacios";
+        }
+
+        // CURP validation
+        if (!values.curp) {
+          errors.curp = "Porfavor ingrese un curp";
+        } else if (
+          !/^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/.test(
+            values.curp
           )
         ) {
-          errors.nombre = "SOlo se permiten letras y espacios";
-          errors.genero = "SOlo se permiten letras y espacios";
-          errors.fechaNacimiento = "SOlo se permiten letras y espacios";
-          errors.entidadNacimiento = "SOlo se permiten letras y espacios";
-          errors.paisNacimiento = "SOlo se permiten letras y espacios";
-          errors.nacionalidad = "SOlo se permiten letras y espacios";
-          errors.estadoCivil = "SOlo se permiten letras y espacios";
+          errors.curp = "ingrese un curp válido";
+        }
+
+        // RFC validation
+        if (!values.rfc) {
+          errors.rfc = "Favor ingrese un rfc";
+        } else if (
+          !/^([A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})$/.test(
+            values.rfc
+          )
+        ) {
+          errors.rfc = "ingrese un rfc válido";
+        }
+
+        // estado civil validation
+        if (!values.estadoCivil) {
+          errors.estadoCivil = "Favor de ingresar el estado civil";
+        } else if (
+          !/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.estadoCivil)
+        ) {
+          errors.estadoCivil = "El estado civil solo permite letras y espacios";
+        }
+
+        // phonenumber validation
+        if (!values.telefono) {
+          errors.telefono = "Porfavor ingrese un telefono";
+        } else if (
+          !/^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/.test(
+            values.telefono
+          )
+        ) {
+          errors.telefono = "ingrese un telefono válido";
         }
 
         // email validation
@@ -90,33 +147,9 @@ export const StepTwo: React.FC<StepTwoProperties> = ({
         ) {
           errors.email = "ingrese un mail válido";
         }
-        if (!values.curp) {
-          errors.curp = "Porfavor ingrese un curp";
-        } else if (
-          !/^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/.test(
-            values.curp
-          )
-        ) {
-          errors.curp = "ingrese un curp válido";
-        }
-        if (!values.rfc) {
-          errors.rfc = "Porfavor ingrese un rfc";
-        } else if (
-          !/^([A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})$/.test(
-            values.rfc
-          )
-        ) {
-          errors.rfc = "ingrese un rfc válido";
-        }
-        if (!values.telefono) {
-          errors.telefono = "Porfavor ingrese un telefono";
-        } else if (
-          !/^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/.test(
-            values.telefono
-          )
-        ) {
-          errors.telefono = "ingrese un telefono válido";
-        }
+        
+        
+        
         return errors;
       }}
       onSubmit={(data) => {
@@ -183,8 +216,8 @@ export const StepTwo: React.FC<StepTwoProperties> = ({
                       name="fechaNacimiento"
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      type="text"
-                      size="short"
+                      type="date"
+                      size="small"
                       placeholder=""
                       value={values.fechaNacimiento}
                     />
@@ -227,7 +260,7 @@ export const StepTwo: React.FC<StepTwoProperties> = ({
                       onChange={handleChange}
                       onBlur={handleBlur}
                       type="text"
-                      size="short"
+                      size="small"
                       placeholder=""
                       value={values.curp}
                     />
@@ -240,7 +273,7 @@ export const StepTwo: React.FC<StepTwoProperties> = ({
                       onChange={handleChange}
                       onBlur={handleBlur}
                       type="text"
-                      size="short"
+                      size="small"
                       placeholder=""
                       value={values.rfc}
                     />
@@ -256,7 +289,7 @@ export const StepTwo: React.FC<StepTwoProperties> = ({
                       onChange={handleChange}
                       onBlur={handleBlur}
                       type="text"
-                      size="short"
+                      size="small"
                       placeholder=""
                       value={values.estadoCivil}
                     />
@@ -289,6 +322,110 @@ export const StepTwo: React.FC<StepTwoProperties> = ({
                       type="text"
                       placeholder=""
                       value={values.telefono}
+                    />
+                    <InputSimple
+                    errorMessage={ 
+                      touched.calle  && touched.calle ? errors.calle : null 
+                    }
+                    label="Calle o Avenida"
+                    name="calle"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    size="normal"
+                    type="text"
+                    placeholder=""
+                    value={values.calle}
+                    />
+                    <InputSimple
+                    errorMessage={ 
+                      touched.ext  && touched.ext ? errors.ext : null 
+                    }
+                    label="Número exterior"
+                    name="ext"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    size="small"
+                    type="text"
+                    placeholder=""
+                    value={values.ext}
+                    />
+                    <InputSimple
+                    errorMessage={ 
+                      touched.int  && touched.int ? errors.int : null 
+                    }
+                    label="Número interior"
+                    name="int"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    size="small"
+                    type="text"
+                    placeholder=""
+                    value={values.int}
+                    />
+                    <InputSimple
+                    errorMessage={ 
+                      touched.zipcode  && touched.zipcode ? errors.zipcode : null 
+                    }
+                    label="Código Postal"
+                    name="zipcode"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    size="small"
+                    type="text"
+                    placeholder=""
+                    value={values.zipcode}
+                    />
+                    <InputSimple
+                    errorMessage={ 
+                      touched.colonia  && touched.colonia ? errors.colonia : null 
+                    }
+                    label="Colonia o Urbanización"
+                    name="colonia"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    size="small"
+                    type="text"
+                    placeholder=""
+                    value={values.colonia}
+                    />
+                    <InputSimple
+                    errorMessage={ 
+                      touched.ciudad  && touched.ciudad ? errors.ciudad : null 
+                    }
+                    label="Ciudad o Población"
+                    name="ciudad"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    size="small"
+                    type="text"
+                    placeholder=""
+                    value={values.ciudad}
+                    />
+                    <InputSimple
+                    errorMessage={ 
+                      touched.entidad  && touched.entidad ? errors.entidad : null 
+                    }
+                    label="Entidad Federativa o Estado"
+                    name="entidad"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    size="small"
+                    type="text"
+                    placeholder=""
+                    value={values.entidad}
+                    />
+                    <InputSimple
+                    errorMessage={ 
+                      touched.pais  && touched.pais ? errors.pais : null 
+                    }
+                    label="País"
+                    name="pais"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    size="small"
+                    type="text"
+                    placeholder=""
+                    value={values.pais}
                     />
 
                     <button type="submit">Enviar</button>
