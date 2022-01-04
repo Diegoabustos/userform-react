@@ -1,11 +1,28 @@
-export const InputUpDoc = () => {
+interface InputDocProperties {
+  errorMessage?: any;
+  name?: string;
+  label?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  placeholder?: string;
+  type?: string;
+  value?: string;
+}
+
+export const InputUpDoc: React.FC<InputDocProperties> = ({
+  errorMessage,
+  name,
+  label,
+  onChange,
+  placeholder,
+  type,
+  value,
+}: InputDocProperties): JSX.Element => {
   return (
     <div className="w-full lg:w-6/12 px-4">
       <label
-        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-        html-for="grid-password"
+        className="block uppercase text-blue-900 text-xs font-bold mb-2"
       >
-        Comprobante de domicilio
+        {label}
       </label>
       <div className="mb-3 mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-black border-dashed rounded-md ">
         <div className="space-y-1 text-center">
@@ -25,20 +42,23 @@ export const InputUpDoc = () => {
           </svg>
           <div className="flex text-sm text-black">
             <label
-              htmlFor="file-upload"
               className="relative cursor-pointer rounded-md font-medium text-black focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
             >
-              <span className="">Upload a file</span>
+              <span className="">{placeholder}</span>
               <input
-                id="file-upload"
-                name="file-upload"
-                type="file"
+                onChange={onChange}
+                name={name}
+                value={value}
+                type={type}
                 className="sr-only"
               />
+
             </label>
+            
           </div>
         </div>
       </div>
+        <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1" >{errorMessage}</span>
     </div>
   );
 };
