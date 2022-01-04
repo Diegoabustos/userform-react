@@ -2,6 +2,7 @@ import { InputSimple } from "../Input/InputSimple";
 import { Form, Formik, FormikErrors } from "formik";
 import { ContainerForm } from "./ContainerForm";
 import { Button } from "../Button";
+import { InputUpDoc } from "../Input/InputUpDoc";
 
 interface StepTwoProperties {
   prevStep?: any;
@@ -63,7 +64,6 @@ export const StepTwo: React.FC<StepTwoProperties> = ({
       validate={(values) => {
         let errors: FormikErrors<MyFormValues> = {};
 
-
         // name validation
         if (!values.nombre) {
           errors.nombre = "Favor de ingresar en nombre";
@@ -83,20 +83,26 @@ export const StepTwo: React.FC<StepTwoProperties> = ({
           errors.fechaNacimiento = "Campo de fecha obligatorio";
         }
 
+        // doc identificacion validation
+        if (!values.identificacionDoc) {
+          errors.identificacionDoc = "Favor de cargar documento de identificación";
+        }
+
         // entity validation
         if (!values.entidadNacimiento) {
-          errors.entidadNacimiento = "Favor de ingresar la entidad de nacimiento";
+          errors.entidadNacimiento =
+            "Favor de ingresar la entidad de nacimiento";
         } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.entidadNacimiento)) {
-          errors.entidadNacimiento = "La entidad de nacimiento solo permite letras y espacios";
+          errors.entidadNacimiento =
+            "La entidad de nacimiento solo permite letras y espacios";
         }
 
         // nacionalidad validation
         if (!values.nacionalidad) {
           errors.nacionalidad = "Favor de ingresar a nacionalidad";
-        } else if (
-          !/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.nacionalidad)
-        ) {
-          errors.nacionalidad = "La nacionalidad solo permite letras y espacios";
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.nacionalidad)) {
+          errors.nacionalidad =
+            "La nacionalidad solo permite letras y espacios";
         }
 
         // CURP validation
@@ -124,9 +130,7 @@ export const StepTwo: React.FC<StepTwoProperties> = ({
         // estado civil validation
         if (!values.estadoCivil) {
           errors.estadoCivil = "Favor de ingresar el estado civil";
-        } else if (
-          !/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.estadoCivil)
-        ) {
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.estadoCivil)) {
           errors.estadoCivil = "El estado civil solo permite letras y espacios";
         }
 
@@ -149,9 +153,7 @@ export const StepTwo: React.FC<StepTwoProperties> = ({
         ) {
           errors.email = "ingrese un mail válido";
         }
-        
-        
-        
+
         return errors;
       }}
       onSubmit={(data) => {
@@ -166,275 +168,286 @@ export const StepTwo: React.FC<StepTwoProperties> = ({
         handleChange,
         handleBlur,
       }) => (
-<ContainerForm 
-  children={
-    <form onSubmit={handleSubmit}>
-                  <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                    Representante Legal
-                  </h6>
-                  <div className="flex flex-wrap">
-                    <InputSimple
-                      errorMessage={
-                        touched.nombre && errors.nombre ? errors.nombre : null
-                      }
-                      label="nombre"
-                      name="nombre"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      type="text"
-                      size="normal"
-                      placeholder=""
-                      value={values.nombre}
-                    />
-                    <InputSimple
-                      errorMessage={
-                        touched.genero && errors.genero ? errors.genero : null
-                      }
-                      label="genero"
-                      name="genero"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      type="text"
-                      size="small"
-                      placeholder=""
-                      value={values.genero}
-                    />
-                    <InputSimple
-                      errorMessage={
-                        touched.fechaNacimiento && errors.fechaNacimiento
-                          ? errors.fechaNacimiento
-                          : null
-                      }
-                      label="fecha de nacimiento"
-                      name="fechaNacimiento"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      type="date"
-                      size="small"
-                      placeholder=""
-                      value={values.fechaNacimiento}
-                    />
-                    <InputSimple
-                      errorMessage={
-                        touched.entidadNacimiento && errors.entidadNacimiento
-                          ? errors.entidadNacimiento
-                          : null
-                      }
-                      label="entidad de nacimiento"
-                      name="entidadNacimiento"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      size="small"
-                      type="text"
-                      placeholder=""
-                      value={values.entidadNacimiento}
-                    />
-                    <InputSimple
-                      errorMessage={
-                        touched.nacionalidad && errors.nacionalidad
-                          ? errors.nacionalidad
-                          : null
-                      }
-                      label="nacionalidad"
-                      name="nacionalidad"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      size="small"
-                      type="text"
-                      placeholder=""
-                      value={values.nacionalidad}
-                    />
-                    <InputSimple
-                      errorMessage={
-                        touched.curp && errors.curp ? errors.curp : null
-                      }
-                      label="curp"
-                      name="curp"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      type="text"
-                      size="small"
-                      placeholder=""
-                      value={values.curp}
-                    />
-                    <InputSimple
-                      errorMessage={
-                        touched.rfc && errors.rfc ? errors.rfc : null
-                      }
-                      label="rfc"
-                      name="rfc"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      type="text"
-                      size="small"
-                      placeholder=""
-                      value={values.rfc}
-                    />
+        <ContainerForm
+          children={
+            <form onSubmit={handleSubmit}>
+              <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                Representante Legal
+              </h6>
+              <div className="flex flex-wrap">
+                <InputSimple
+                  errorMessage={
+                    touched.nombre && errors.nombre ? errors.nombre : null
+                  }
+                  label="nombre"
+                  name="nombre"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  type="text"
+                  size="normal"
+                  placeholder=""
+                  value={values.nombre}
+                />
+                <InputSimple
+                  errorMessage={
+                    touched.email && errors.email ? errors.email : null
+                  }
+                  label="dirección de correo electrónico"
+                  name="email"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  size="normal"
+                  type="email"
+                  placeholder=""
+                  value={values.email}
+                />
+                
+                <InputSimple
+                  errorMessage={
+                    touched.fechaNacimiento && errors.fechaNacimiento
+                      ? errors.fechaNacimiento
+                      : null
+                  }
+                  label="fecha de nacimiento"
+                  name="fechaNacimiento"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  type="date"
+                  size="small"
+                  placeholder=""
+                  value={values.fechaNacimiento}
+                />
+                <InputSimple
+                  errorMessage={
+                    touched.entidadNacimiento && errors.entidadNacimiento
+                      ? errors.entidadNacimiento
+                      : null
+                  }
+                  label="entidad de nacimiento"
+                  name="entidadNacimiento"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  size="small"
+                  type="text"
+                  placeholder=""
+                  value={values.entidadNacimiento}
+                />
+                <InputSimple
+                  errorMessage={
+                    touched.nacionalidad && errors.nacionalidad
+                      ? errors.nacionalidad
+                      : null
+                  }
+                  label="nacionalidad"
+                  name="nacionalidad"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  size="small"
+                  type="text"
+                  placeholder=""
+                  value={values.nacionalidad}
+                />
+                <InputSimple
+                  errorMessage={
+                    touched.curp && errors.curp ? errors.curp : null
+                  }
+                  label="curp"
+                  name="curp"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  type="text"
+                  size="small"
+                  placeholder=""
+                  value={values.curp}
+                />
+                <InputSimple
+                  errorMessage={touched.rfc && errors.rfc ? errors.rfc : null}
+                  label="rfc"
+                  name="rfc"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  type="text"
+                  size="small"
+                  placeholder=""
+                  value={values.rfc}
+                />
 
-                    <InputSimple
-                      errorMessage={
-                        touched.estadoCivil && errors.estadoCivil
-                          ? errors.estadoCivil
-                          : null
-                      }
-                      label="estado civil"
-                      name="estadoCivil"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      type="text"
-                      size="small"
-                      placeholder=""
-                      value={values.estadoCivil}
-                    />
-
-                    <InputSimple
-                      errorMessage={
-                        touched.email && errors.email ? errors.email : null
-                      }
-                      label="dirección de correo electrónico"
-                      name="email"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      size="small"
-                      type="email"
-                      placeholder="juan@perezmail.com"
-                      value={values.email}
-                    />
-
-                    <InputSimple
-                      errorMessage={
-                        touched.telefono && errors.telefono
-                          ? errors.telefono
-                          : null
-                      }
-                      label="número telefónico"
-                      name="telefono"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      size="small"
-                      type="text"
-                      placeholder=""
-                      value={values.telefono}
-                    />
-                    <InputSimple
-                    errorMessage={ 
-                      touched.calle  && touched.calle ? errors.calle : null 
-                    }
-                    label="Calle o Avenida"
-                    name="calle"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    size="normal"
-                    type="text"
-                    placeholder=""
-                    value={values.calle}
-                    />
-                    <InputSimple
-                    errorMessage={ 
-                      touched.ext  && touched.ext ? errors.ext : null 
-                    }
-                    label="Número exterior"
-                    name="ext"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    size="small"
-                    type="text"
-                    placeholder=""
-                    value={values.ext}
-                    />
-                    <InputSimple
-                    errorMessage={ 
-                      touched.int  && touched.int ? errors.int : null 
-                    }
-                    label="Número interior"
-                    name="int"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    size="small"
-                    type="text"
-                    placeholder=""
-                    value={values.int}
-                    />
-                    <InputSimple
-                    errorMessage={ 
-                      touched.zipcode  && touched.zipcode ? errors.zipcode : null 
-                    }
-                    label="Código Postal"
-                    name="zipcode"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    size="small"
-                    type="text"
-                    placeholder=""
-                    value={values.zipcode}
-                    />
-                    <InputSimple
-                    errorMessage={ 
-                      touched.colonia  && touched.colonia ? errors.colonia : null 
-                    }
-                    label="Colonia o Urbanización"
-                    name="colonia"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    size="small"
-                    type="text"
-                    placeholder=""
-                    value={values.colonia}
-                    />
-                    <InputSimple
-                    errorMessage={ 
-                      touched.ciudad  && touched.ciudad ? errors.ciudad : null 
-                    }
-                    label="Ciudad o Población"
-                    name="ciudad"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    size="small"
-                    type="text"
-                    placeholder=""
-                    value={values.ciudad}
-                    />
-                    <InputSimple
-                    errorMessage={ 
-                      touched.entidad  && touched.entidad ? errors.entidad : null 
-                    }
-                    label="Entidad Federativa o Estado"
-                    name="entidad"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    size="small"
-                    type="text"
-                    placeholder=""
-                    value={values.entidad}
-                    />
-                    <InputSimple
-                    errorMessage={ 
-                      touched.pais  && touched.pais ? errors.pais : null 
-                    }
-                    label="País"
-                    name="pais"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    size="small"
-                    type="text"
-                    placeholder=""
-                    value={values.pais}
-                    />
-
-                  </div>
-
-                  <div className="flex justify-between ">
-                <Button primary="Regresar" position="start" onClick={prevStep} />
-
-                <Button primary="Enviar" position="end" />
-                  </div>
-                  
-              
-                </form>
-  }
-/>
                 
 
+                
+
+                <InputSimple
+                  errorMessage={
+                    touched.telefono && errors.telefono ? errors.telefono : null
+                  }
+                  label="número telefónico"
+                  name="telefono"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  size="small"
+                  type="text"
+                  placeholder=""
+                  value={values.telefono}
+                />
+                <InputSimple
+                  errorMessage={
+                    touched.genero && errors.genero ? errors.genero : null
+                  }
+                  label="genero"
+                  name="genero"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  type="text"
+                  size="small"
+                  placeholder=""
+                  value={values.genero}
+                />
+                <InputSimple
+                  errorMessage={
+                    touched.estadoCivil && errors.estadoCivil
+                      ? errors.estadoCivil
+                      : null
+                  }
+                  label="estado civil"
+                  name="estadoCivil"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  type="text"
+                  size="small"
+                  placeholder=""
+                  value={values.estadoCivil}
+                />
+                <InputUpDoc
+                  errorMessage={
+                    touched.identificacionDoc && touched.identificacionDoc ? errors.identificacionDoc : null
+                  }
+                  label="Documento de indentificación"
+                  name="identificacionDoc"
+                  onChange={handleChange}
+                  type="file"
+                  placeholder="Cargar documento"
+                  value={values.identificacionDoc}
+                />
+              </div>
+              <hr className="mt-6 border-b-10 border-blue-900" />
+              <h6 className="text-black text-sm mt-3 mb-6 font-bold uppercase">
+                Domicilio
+              </h6>
+              <div className="flex flex-wrap">
+                <InputSimple
+                  errorMessage={
+                    touched.calle && touched.calle ? errors.calle : null
+                  }
+                  label="Calle o Avenida"
+                  name="calle"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  size="medium"
+                  type="text"
+                  placeholder=""
+                  value={values.calle}
+                />
+                <InputSimple
+                  errorMessage={touched.ext && touched.ext ? errors.ext : null}
+                  label="Número exterior"
+                  name="ext"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  size="small"
+                  type="text"
+                  placeholder=""
+                  value={values.ext}
+                />
+                <InputSimple
+                  errorMessage={touched.int && touched.int ? errors.int : null}
+                  label="Número interior"
+                  name="int"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  size="small"
+                  type="text"
+                  placeholder=""
+                  value={values.int}
+                />
+                <InputSimple
+                  errorMessage={
+                    touched.zipcode && touched.zipcode ? errors.zipcode : null
+                  }
+                  label="Código Postal"
+                  name="zipcode"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  size="small"
+                  type="text"
+                  placeholder=""
+                  value={values.zipcode}
+                />
+                <InputSimple
+                  errorMessage={
+                    touched.colonia && touched.colonia ? errors.colonia : null
+                  }
+                  label="Colonia o Urbanización"
+                  name="colonia"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  size="small"
+                  type="text"
+                  placeholder=""
+                  value={values.colonia}
+                />
+                <InputSimple
+                  errorMessage={
+                    touched.ciudad && touched.ciudad ? errors.ciudad : null
+                  }
+                  label="Ciudad o Población"
+                  name="ciudad"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  size="small"
+                  type="text"
+                  placeholder=""
+                  value={values.ciudad}
+                />
+                <InputSimple
+                  errorMessage={
+                    touched.entidad && touched.entidad ? errors.entidad : null
+                  }
+                  label="Entidad Federativa o Estado"
+                  name="entidad"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  size="small"
+                  type="text"
+                  placeholder=""
+                  value={values.entidad}
+                />
+                <InputSimple
+                  errorMessage={
+                    touched.pais && touched.pais ? errors.pais : null
+                  }
+                  label="País"
+                  name="pais"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  size="small"
+                  type="text"
+                  placeholder=""
+                  value={values.pais}
+                />
+              </div>
+
+              <div className="flex justify-between ">
+                <Button
+                  primary="Regresar"
+                  position="start"
+                  onClick={prevStep}
+                />
+
+                <Button primary="Enviar" position="end" />
+              </div>
+            </form>
+          }
+        />
       )}
     </Formik>
   );
