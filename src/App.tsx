@@ -4,7 +4,7 @@ import { StepTwo } from "./components/UserForm/StepTwo";
 
 function App() {
   //state for steps
-  const [step, setstep] = useState(2);
+  const [step, setstep] = useState(1);
 
   // function for going to next step by increasing step state by 1
   const nextStep = () => {

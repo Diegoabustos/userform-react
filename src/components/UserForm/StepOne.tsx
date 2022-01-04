@@ -74,6 +74,25 @@ export const StepOne: React.FC<StepOneProperties> = ({
           errors.nombreComercial =
             "El nombre comercial solo permite letras y espacios";
         }
+
+        //banco
+        if (!values.banco) {
+          errors.banco = "Favor de ingresar el nombre del banco";
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.banco)) {
+          errors.banco =
+            "El nombre del banco solo permite letras y espacios";
+        }
+
+        // CLABE
+
+        if (!values.clabe) {
+          errors.clabe = "Favor de ingresar la CLABE interbancaria";
+        } else if (!/^[1-9][0-9]{17}$/.test(values.clabe)) {
+          errors.clabe =
+            "El formato de CLABE es inválido";
+        }
+
+        //NACIONALIDAD
         if (!values.nacionalidad) {
           errors.nacionalidad = "Favor de ingresar a nacionalidad";
         } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.nacionalidad)) {
@@ -159,28 +178,28 @@ export const StepOne: React.FC<StepOneProperties> = ({
         // colonia
         if (!values.colonia) {
           errors.colonia = "Favor de ingresar la colonia";
-        } else if (!/^\d{4,5}$/.test(values.colonia)) {
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.colonia)) {
           errors.colonia = "EL campo de colonia solo permite letras y espacios";
         }
 
         // ciudad
         if (!values.ciudad) {
           errors.ciudad = "Favor de ingresar la ciudad";
-        } else if (!/^\d{4,5}$/.test(values.ciudad)) {
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.ciudad)) {
           errors.ciudad = "EL campo de ciudad solo permite letras y espacios";
         }
 
         // entidad
         if (!values.entidad) {
           errors.entidad = "Favor de ingresar entidad o estado";
-        } else if (!/^\d{4,5}$/.test(values.entidad)) {
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.entidad)) {
           errors.entidad = "Solo se permite letras y espacios en este campo";
         }
 
         // pais
         if (!values.pais) {
           errors.pais = "Favor de ingresar el pais";
-        } else if (!/^\d{4,5}$/.test(values.pais)) {
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.pais)) {
           errors.pais = "EL campo de pais solo permite letras y espacios";
         }
 
@@ -486,7 +505,7 @@ export const StepOne: React.FC<StepOneProperties> = ({
               </div>
 
               <div className="flex flex-wrap justify-end">
-                <Button primary="Enviar" type="submit" />
+                <Button primary="Continuar" type="submit" />
               </div>
             </form>
           }

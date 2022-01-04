@@ -1,5 +1,6 @@
 import { InputSimple } from "../Input/InputSimple";
-import { Form, Formik, FormikErrors } from "formik";
+import Swal from 'sweetalert2'
+import { Formik, FormikErrors } from "formik";
 import { ContainerForm } from "./ContainerForm";
 import { Button } from "../Button";
 import { InputUpDoc } from "../Input/InputUpDoc";
@@ -178,35 +179,46 @@ export const StepTwo: React.FC<StepTwoProperties> = ({
         // colonia
         if (!values.colonia) {
           errors.colonia = "Favor de ingresar la colonia";
-        } else if (!/^\d{4,5}$/.test(values.colonia)) {
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.colonia)) {
           errors.colonia = "EL campo de colonia solo permite letras y espacios";
         }
 
         // ciudad
         if (!values.ciudad) {
           errors.ciudad = "Favor de ingresar la ciudad";
-        } else if (!/^\d{4,5}$/.test(values.ciudad)) {
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.ciudad)) {
           errors.ciudad = "EL campo de ciudad solo permite letras y espacios";
         }
 
         // entidad
         if (!values.entidad) {
           errors.entidad = "Favor de ingresar entidad o estado";
-        } else if (!/^\d{4,5}$/.test(values.entidad)) {
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.entidad)) {
           errors.entidad = "Solo se permite letras y espacios en este campo";
         }
 
         // pais
         if (!values.pais) {
           errors.pais = "Favor de ingresar el pais";
-        } else if (!/^\d{4,5}$/.test(values.pais)) {
+        } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.pais)) {
           errors.pais = "EL campo de pais solo permite letras y espacios";
         }
 
         return errors;
       }}
       onSubmit={(data) => {
+        prevStep(1)
+        setTimeout(() => {
+          
+        }, 3000);
         console.log("Formulario Enviado", data);
+        let alert;
+        Swal.fire({
+          title: 'Registro exitoso',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 2000,
+        })
       }}
     >
       {({
