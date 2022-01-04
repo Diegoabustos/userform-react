@@ -1,7 +1,7 @@
-import { InputSimple } from "../InputSimple";
-import { InputUpDoc } from "../InputUpDoc";
+import { InputSimple } from "../Input/InputSimple";
+import { InputUpDoc } from "../Input/InputUpDoc";
 import { Formik, FormikErrors } from "formik";
-import { Button } from "../UI/Button";
+import { Button } from "../Button";
 import { ContainerForm } from "./ContainerForm";
 
 interface StepOneProperties {
@@ -18,6 +18,7 @@ interface MyFormValues {
   industria: string;
   telefono: string;
   email: string;
+  comprobanteDomicilio: any;
   calle: string;
   ext: string;
   int: string;
@@ -43,6 +44,7 @@ export const StepOne: React.FC<StepOneProperties> = ({
     industria: "",
     telefono: "",
     email: "",
+    comprobanteDomicilio: "",
     calle: "",
     ext: "",
     int: "",
@@ -108,6 +110,11 @@ export const StepOne: React.FC<StepOneProperties> = ({
           errors.fechaConstitucion = "Campo de fecha obligatorio";
         }
 
+        // comprobante de domicilio validation
+        if (!values.comprobanteDomicilio) {
+          errors.comprobanteDomicilio = "Favor de cargar el documento";
+        }
+
         // thelephone number validation
         if (!values.telefono) {
           errors.telefono = "Porfavor ingrese un telefono";
@@ -141,6 +148,7 @@ export const StepOne: React.FC<StepOneProperties> = ({
         handleSubmit,
         values,
         handleChange,
+        setFieldValue,
         handleBlur,
       }) => (
         <ContainerForm
@@ -308,7 +316,17 @@ export const StepOne: React.FC<StepOneProperties> = ({
                   value={values.banco}
                 />
 
-                <InputUpDoc />
+                <InputUpDoc
+                  errorMessage={
+                    touched.comprobanteDomicilio && touched.comprobanteDomicilio ? errors.comprobanteDomicilio : null
+                  }
+                  label="Comprobante de Domicilio"
+                  name="comprobanteDomicilio"
+                  onChange={handleChange}
+                  type="file"
+                  placeholder="Cargar documento"
+                  value={values.comprobanteDomicilio}
+                />
               </div>
               <hr className="mt-6 border-b-10 border-blue-900" />
               <h6 className="text-black text-sm mt-3 mb-6 font-bold uppercase">
@@ -419,7 +437,7 @@ export const StepOne: React.FC<StepOneProperties> = ({
               </div>
 
               <div className="flex flex-wrap justify-end">
-                <Button primary="Enviar" />
+                <Button primary="Enviar" type="submit" />
               </div>
             </form>
           }

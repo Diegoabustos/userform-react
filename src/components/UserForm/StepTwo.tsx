@@ -1,7 +1,7 @@
-import { InputSimple } from "../InputSimple";
+import { InputSimple } from "../Input/InputSimple";
 import { Form, Formik, FormikErrors } from "formik";
 import { ContainerForm } from "./ContainerForm";
-import { Button } from "../UI/Button";
+import { Button } from "../Button";
 
 interface StepTwoProperties {
   prevStep?: any;

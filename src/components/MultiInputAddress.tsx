@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { InputSimple } from "./InputSimple";
+import { InputSimple } from "./Input/InputSimple";
 
 interface MultiInputAddressProperties {
   data: Array<StepProperties>;

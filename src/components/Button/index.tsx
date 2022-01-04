@@ -1,5 +1,6 @@
 interface ButtonProperties {
   primary: string;
+  type?: 'submit';
   onClick?(event?: React.MouseEvent<HTMLButtonElement>): void;
   position?: "start" | "end";
 }
@@ -7,6 +8,7 @@ interface ButtonProperties {
 export const Button: React.FC<ButtonProperties> = ({
   primary,
   onClick,
+  type,
   position,
 }: ButtonProperties): JSX.Element => {
   const BUTTON_POSITION = {
@@ -15,7 +17,7 @@ export const Button: React.FC<ButtonProperties> = ({
   };
   return (
     <div className={`${BUTTON_POSITION[position!]}`}>
-      <button onClick={onClick} className="bg-blue-800 hover:bg-blue-900 text-white w-72 h-10 font-bold py-2 px-4 rounded-md">
+      <button type={type} onClick={onClick} className="bg-blue-800 hover:bg-blue-900 text-white w-72 h-10 font-bold py-2 px-4 rounded-md">
         {primary}
       </button>
     </div>
