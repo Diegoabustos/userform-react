@@ -6,7 +6,6 @@ _Formulario de registro de usuario_
 
 _Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas._
 
-Mira **Deployment** para conocer como desplegar el proyecto.
 
 
 ### Pre-requisitos 📋
@@ -27,6 +26,13 @@ _Hacer clone del poryecto_
 ```
 git clone git@github.com:Diegoabustos/userform-react.git
 ```
+
+_Instalar dependencias_
+
+```
+yarn
+```
+
 
 _En la carpeta raíz del proyecto compilar con el comando_
 
